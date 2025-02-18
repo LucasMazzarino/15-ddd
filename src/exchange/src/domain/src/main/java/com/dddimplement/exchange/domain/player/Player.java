@@ -15,28 +15,20 @@ public class Player extends AggregateRoot<PlayerId> {
     private Color color;
     private Offer offer;
     private Territory territory;
-    private List<Offer> resources;
+    private List<ResourceType> resources;
     private Turn turn;
 
     // region Constructors
-    private  Player(PlayerId identity, Name name, Color color, Offer offer, Territory territories, List<Offer> resources, Turn turn) {
-        super(identity);
-        this.name = name;
-        this.color = color;
-        this.offer = offer;
-        this.territory = territories;
-        this.resources = resources;
-        this.turn = turn;
+    public Player(String name, String color) {
+        super(new PlayerId());
+        subscribe(new Playerhandler(this));
+        apply(new CreatedPlayer(name, color));
     }
 
-    public Player(Name name, Color color,Offer offer, Territory territories, List<Offer> resources, Turn turn) {
-        super(new PlayerId());
-        this.name = name;
-        this.color = color;
-        this.offer = offer;
-        this.territory = territories;
-        this.resources = resources;
-        this.turn = turn;
+    private  Player(PlayerId identity) {
+        super(identity);
+        subscribe(new Playerhandler(this));
+
     }
     // endregion
 
@@ -73,11 +65,11 @@ public class Player extends AggregateRoot<PlayerId> {
         this.territory = territory;
     }
 
-    public List<Offer> getResources() {
+    public List<ResourceType> getResources() {
         return resources;
     }
 
-    public void setResources(List<Offer> resources) {
+    public void setResources(List<ResourceType> resources) {
         this.resources = resources;
     }
 
@@ -93,6 +85,10 @@ public class Player extends AggregateRoot<PlayerId> {
     // region Doman Actions
     public void createdOffer(Integer amount, String type) {
         apply(new OfferCreated(amount, type));
+    }
+
+    public void createdPlayer(String name, String color) {
+        apply(new CreatedPlayer(name, color));
     }
 
     public void aceptedOffer(String id) {
@@ -129,50 +125,13 @@ public class Player extends AggregateRoot<PlayerId> {
     // endregion
 
     // region public methods
-    public void addTerritory(TerritoryTypeEnum type) {
-        if (type == TerritoryTypeEnum.PATH) {
-            territory.expand();
-        }else if (type == TerritoryTypeEnum.SETTLEMENT) {
-            territory.build();
-        }
-    }
+//    public void addTerritory(TerritoryTypeEnum type) {
+//        if (type == TerritoryTypeEnum.PATH) {
+//            territory.expand();
+//        }else if (type == TerritoryTypeEnum.SETTLEMENT) {
+//            territory.build();
+//        }
+//    }
 
-    public void upgradeTerritory(TerritoryTypeEnum type) {
-        if (type == TerritoryTypeEnum.CITY) {
-            territory.upgrade();
-        }
-    }
-
-    public void startTurn(){
-        this.turn.setFase(TurnFase.of(TurnFaseEnum.ROLL));
-        apply(new TurnStarted(TurnFaseEnum.ROLL));
-
-        int diceRoll = this.turn.rollDice();
-        System.out.println("Rolled: " + diceRoll);
-
-
-        this.turn.setFase(TurnFase.of(TurnFaseEnum.TRADE));
-        this.turn.setFase(TurnFase.of(TurnFaseEnum.BUILD));
-
-        this.turn.setFase(TurnFase.of(TurnFaseEnum.END));
-        apply(new TurnEnded(TurnFaseEnum.END));
-    }
-
-    public void makeOffer(Integer amount, String type) {
-        createdOffer(amount, type);
-    }
-
-    public void acceptOffer(Offer offer) {
-        offer.accept();
-    }
-
-    public void rejectOffer(Offer offer) {
-        offer.reject();
-    }
-
-    public void makeCounterOffer(Integer amount, String type) {
-        createdCounterOffer( amount, type);
-        offer.counterOffer();
-    }
     // endregion
 }
