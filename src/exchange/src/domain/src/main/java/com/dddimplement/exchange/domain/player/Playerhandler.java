@@ -44,7 +44,7 @@ public class Playerhandler extends DomainActionsContainer {
             ResourceType woodResource = ResourceType.of(ResourceTypeEnum.WOOD, Amount.of(2));
             ResourceType wheatResource = ResourceType.of(ResourceTypeEnum.WHEAT, Amount.of(2));
 
-            // Add resources to the player's resource list
+
             player.setResources(List.of(brickResource, sheepResource, stoneResource, woodResource, wheatResource));
             Turn initialTurn = new Turn(TurnFase.of(TurnFaseEnum.ROLL));
             player.setTurn(initialTurn);
@@ -64,18 +64,14 @@ public class Playerhandler extends DomainActionsContainer {
     public Consumer<? extends DomainEvent> OfferAccepted(Player player) {
         return (OfferAccepted event) -> {
             Offer offer = player.getOffer();
-            if (offer != null ) {
                 offer.accept();
-            }
         };
     }
 
     public Consumer<? extends DomainEvent> OfferRejected(Player player) {
         return (OfferAccepted event) -> {
             Offer offer = player.getOffer();
-            if (offer != null) {
                 offer.reject();
-            }
         };
     }
 
@@ -104,12 +100,20 @@ public class Playerhandler extends DomainActionsContainer {
         };
     }
 
-    public Consumer<? extends DomainEvent> TerritoryImproved(Player player) {
+    public Consumer<TerritoryImproved> TerritoryImproved(Player player) {
         return (TerritoryImproved event) -> {
-            Territory territory = player.getTerritory();
-            territory.upgrade();
+            Territory currentTerritory = player.getTerritory();
+
+            if (event.getTerritoryType().equals("CITY")) {
+                player.setTerritory(new Territory(
+                        City.of(currentTerritory.getCity().getValue() + 1),
+                        currentTerritory.getPath(),
+                        Settlement.of(currentTerritory.getSettlement().getValue() - 1) // Restar asentamiento porque se convirtió en ciudad
+                ));
+            }
         };
     }
+
     //endregion
 
     //region Turn

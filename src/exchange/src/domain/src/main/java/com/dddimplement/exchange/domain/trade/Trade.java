@@ -5,6 +5,9 @@ import com.dddimplement.exchange.domain.trade.entities.Maritime;
 import com.dddimplement.exchange.domain.trade.events.*;
 import com.dddimplement.exchange.domain.trade.values.*;
 import com.dddimplement.shared.domain.generic.AggregateRoot;
+import com.dddimplement.shared.domain.generic.DomainEvent;
+
+import java.util.List;
 
 public class Trade extends AggregateRoot<TradeId> {
     private TradeState state;
@@ -22,6 +25,12 @@ public class Trade extends AggregateRoot<TradeId> {
     private Trade( TradeId identity ) {
         super(identity);
         subscribe(new TradeHandler(this));
+    }
+
+    public static Trade from(final String identity, final List<DomainEvent> events){
+        Trade trade = new Trade(TradeId.of(identity));
+        events.forEach(trade::apply);
+        return trade;
     }
 
     //endregion

@@ -12,16 +12,17 @@ public class ResourceType implements IValueObject {
         validate();
     }
 
-    public static ResourceType of(ResourceTypeEnum type, Amount amount) {
+    public static ResourceType of(ResourceTypeEnum type, Amount amount)
+    {
         return new ResourceType(type, amount);
-    }
-
-    public ResourceTypeEnum getType() {
-        return type;
     }
 
     public Amount getAmount() {
         return amount;
+    }
+
+    public ResourceTypeEnum getType() {
+        return type;
     }
 
     @Override

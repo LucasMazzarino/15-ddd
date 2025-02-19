@@ -63,8 +63,5 @@ public class Offer extends Entity<OfferId> {
         this.isAccepted = IsAccepted.of(false);
     }
 
-    public void counterOffer(){
-
-    }
     //endregion
 }

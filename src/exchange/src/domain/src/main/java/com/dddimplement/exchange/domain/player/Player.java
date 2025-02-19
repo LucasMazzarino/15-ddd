@@ -6,9 +6,10 @@ import com.dddimplement.exchange.domain.player.entities.Turn;
 import com.dddimplement.exchange.domain.player.events.*;
 import com.dddimplement.exchange.domain.player.values.*;
 import com.dddimplement.shared.domain.generic.AggregateRoot;
+import com.dddimplement.shared.domain.generic.DomainEvent;
 
 import java.util.List;
-import java.util.Optional;
+
 
 public class Player extends AggregateRoot<PlayerId> {
     private Name name;
@@ -29,6 +30,12 @@ public class Player extends AggregateRoot<PlayerId> {
         super(identity);
         subscribe(new Playerhandler(this));
 
+    }
+
+    public static Player from(final String identity, final List<DomainEvent> events) {
+        Player player = new Player(PlayerId.of(identity));
+        events.forEach(player::apply);
+        return player;
     }
     // endregion
 
@@ -125,13 +132,6 @@ public class Player extends AggregateRoot<PlayerId> {
     // endregion
 
     // region public methods
-//    public void addTerritory(TerritoryTypeEnum type) {
-//        if (type == TerritoryTypeEnum.PATH) {
-//            territory.expand();
-//        }else if (type == TerritoryTypeEnum.SETTLEMENT) {
-//            territory.build();
-//        }
-//    }
 
     // endregion
 }

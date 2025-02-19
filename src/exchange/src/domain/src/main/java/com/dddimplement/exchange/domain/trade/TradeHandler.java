@@ -5,6 +5,7 @@ import com.dddimplement.exchange.domain.trade.entities.Maritime;
 import com.dddimplement.exchange.domain.trade.events.*;
 import com.dddimplement.exchange.domain.trade.values.ExchangeRate;
 import com.dddimplement.exchange.domain.trade.values.TradeState;
+import com.dddimplement.exchange.domain.trade.values.TradeType;
 import com.dddimplement.exchange.domain.trade.values.Value;
 import com.dddimplement.shared.domain.generic.DomainActionsContainer;
 import com.dddimplement.shared.domain.generic.DomainEvent;
@@ -31,16 +32,25 @@ public class TradeHandler extends DomainActionsContainer {
             );
             trade.setDomestic(domestic);
             trade.setMaritime(maritime);
+            trade.setState(TradeState.of(false));
         };
     }
 
 
     public Consumer<? extends DomainEvent> TradeSelected(Trade trade) {
         return (TradeSelected event) -> {
-            switch (event.getType()) {
-                case MARITIME -> trade.getMaritime().activate();
-                case DOMESTIC -> trade.getDomestic().activate();
-                default -> throw new IllegalArgumentException("Invalid trade type");
+            if (event.getType() == null) {
+                throw new IllegalArgumentException("Trade type cannot be null");
+            }
+
+            try {
+                TradeType type = TradeType.valueOf(event.getType().name()); // Verifica si es válido
+                switch (type) {
+                    case MARITIME -> trade.getMaritime().activate();
+                    case DOMESTIC -> trade.getDomestic().activate();
+                }
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid trade type");
             }
         };
     }

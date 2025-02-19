@@ -10,6 +10,10 @@ public class Color implements IValueObject {
         validate();
     }
 
+    public String getValue() {
+        return color;
+    }
+
     public static Color of(String color) {
         return new Color(color);
     }
