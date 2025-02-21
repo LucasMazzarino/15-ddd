@@ -1,0 +1,6 @@
+dependencies {
+    implementation(project(":shared:application"))
+    implementation(project(":shared:domain"))
+    implementation(project(":exchange:domain"))
+    implementation 'io.projectreactor:reactor-core:3.6.8'
+}
