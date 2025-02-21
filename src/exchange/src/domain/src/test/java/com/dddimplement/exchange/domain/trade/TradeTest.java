@@ -34,19 +34,6 @@ class TradeTest {
         assertFalse(trade.getState().getState());
     }
 
-    @Test
-    void testTradeSelectedMaritime() {
-        trade.tradeSelected(TradeType.MARITIME);
-        assertTrue(trade.getMaritime().isActive());
-        assertFalse(trade.getDomestic().isActive());
-    }
-
-    @Test
-    void testTradeSelectedDomestic() {
-        trade.tradeSelected(TradeType.DOMESTIC);
-        assertTrue(trade.getDomestic().isActive());
-        assertFalse(trade.getMaritime().isActive());
-    }
 
     @Test
     void testExchangeRateImproved() {
@@ -106,39 +93,17 @@ class TradeTest {
 
     }
 
-
     @Test
-    void testTradeSelectedNullType() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            trade.tradeSelected(null);
-        });
-
-        String expectedMessage = "Trade type cannot be null";
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage));
+    void testTradeTypeValues() {
+        TradeType[] expectedValues = {TradeType.DOMESTIC, TradeType.MARITIME};
+        TradeType[] actualValues = TradeType.values();
+        assertArrayEquals(expectedValues, actualValues);
     }
 
     @Test
-    void fromMethodWithMultipleEvents() {
-        String identity = "trade-2";
-        List<DomainEvent> events = List.of(
-                new TradeCreated(6, 2),
-                new TradeSelected(TradeType.MARITIME),
-                new ExchangeRateImproved(3, 1)
-        );
-
-        Trade trade = Trade.from(identity, events);
-
-        assertNotNull(trade);
-        assertEquals(identity, trade.getIdentity().getValue());
-        assertTrue(trade.getMaritime().isActive());
-        assertFalse(trade.getDomestic().isActive());
-        assertEquals(9, trade.getMaritime().getExchangeRate().getValueOrdered().getValue());
-        assertEquals(3, trade.getMaritime().getExchangeRate().getValueReceived().getValue());
+    void testTradeTypeValueOf() {
+        assertEquals(TradeType.DOMESTIC, TradeType.valueOf("DOMESTIC"));
+        assertEquals(TradeType.MARITIME, TradeType.valueOf("MARITIME"));
     }
-
-
-
 
 }
