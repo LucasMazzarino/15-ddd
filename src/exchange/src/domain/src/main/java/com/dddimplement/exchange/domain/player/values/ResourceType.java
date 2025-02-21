@@ -4,15 +4,25 @@ import com.dddimplement.shared.domain.generic.IValueObject;
 
 public class ResourceType implements IValueObject {
     private final  ResourceTypeEnum type;
+    private final Amount amount;
 
-    public ResourceType(ResourceTypeEnum type) {
+    public ResourceType(ResourceTypeEnum type, Amount amount) {
         this.type = type;
+        this.amount = amount;
         validate();
     }
 
-    public static ResourceType of(ResourceTypeEnum type)
+    public static ResourceType of(ResourceTypeEnum type, Amount amount)
     {
-        return new ResourceType(type);
+        return new ResourceType(type, amount);
+    }
+
+    public Amount getAmount() {
+        return amount;
+    }
+
+    public ResourceTypeEnum getType() {
+        return type;
     }
 
     @Override

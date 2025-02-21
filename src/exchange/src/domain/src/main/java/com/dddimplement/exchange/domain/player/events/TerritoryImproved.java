@@ -4,14 +4,14 @@ import com.dddimplement.shared.domain.generic.DomainEvent;
 
 public class TerritoryImproved extends DomainEvent {
 
-    private final String territoryId;
+    private final String territoryType;
 
-    public TerritoryImproved( String territoryId) {
+    public TerritoryImproved( String territoryType) {
         super(EventsEnum.TERRITORY_IMPROVED.name());
-        this.territoryId = territoryId;
+        this.territoryType = territoryType;
     }
 
-    public String getTerritoryId() {
-        return territoryId;
+    public String getTerritoryType() {
+        return territoryType;
     }
 }

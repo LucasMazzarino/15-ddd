@@ -56,6 +56,10 @@ public class Territory extends Entity<TerritoryId> {
     }
 
     public void upgrade(){
+        if (settlement.getValue() < 1) {
+            throw new IllegalStateException("No hay asentamientos suficientes para mejorar a ciudad.");
+        }
+
         this.settlement = Settlement.of(settlement.getValue() - 1);
         this.city = City.of(city.getValue() + 1);
     }

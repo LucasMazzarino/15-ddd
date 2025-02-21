@@ -43,6 +43,15 @@ public class Offer extends Entity<OfferId> {
     public void setType(ResourceType type) {
         this.type = type;
     }
+
+    public IsAccepted getIsAccepted() {
+        return isAccepted;
+    }
+
+    public void setIsAccepted(IsAccepted isAccepted) {
+        this.isAccepted = isAccepted;
+    }
+
     //endregion
 
     //region Methods
@@ -54,8 +63,5 @@ public class Offer extends Entity<OfferId> {
         this.isAccepted = IsAccepted.of(false);
     }
 
-    public void counterOffer(){
-
-    }
     //endregion
 }
