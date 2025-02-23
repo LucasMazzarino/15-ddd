@@ -132,6 +132,17 @@ public class Player extends AggregateRoot<PlayerId> {
     // endregion
 
     // region public methods
+    public Territory getTerritoryById(final String territoryId) {
+        return new Territory(TerritoryId.of(territoryId) , this.territory.getCity(), this.territory.getPath(), this.territory.getSettlement());
+    }
+
+    public Offer getOfferById(final String offerId) {
+        return new Offer(OfferId.of(offerId), this.offer.getAmount(), this.offer.getType(), this.offer.getIsAccepted());
+    }
+
+    public Turn getTurnById(final String turnId) {
+        return new Turn(TurnId.of(turnId), this.turn.getFase());
+    }
 
     // endregion
 }

@@ -18,6 +18,7 @@ public class TradeState implements IValueObject {
         return state;
     }
 
+
     @Override
     public void validate() {
         if (this.state == null) {
