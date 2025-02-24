@@ -1,6 +1,7 @@
 package com.dddimplement.exchange.domain.player.events;
 
 public enum EventsEnum {
+   CREATED_PLAYER,
    OFFER_CREATED,
    OFFER_ACCEPTED,
    OFFER_REJECTED,

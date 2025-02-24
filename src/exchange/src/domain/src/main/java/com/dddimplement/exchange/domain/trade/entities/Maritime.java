@@ -7,11 +7,13 @@ import com.dddimplement.shared.domain.generic.Entity;
 
 public class Maritime extends Entity<MaritimeId> {
  private ExchangeRate exchangeDesired;
+ private boolean active;
 
  // region Constructors
     public Maritime(MaritimeId identity, ExchangeRate exchangeRate) {
         super(identity);
         this.exchangeDesired = exchangeRate;
+        this.active = false;
     }
 
     public Maritime(ExchangeRate exchangeRate) {
@@ -28,11 +30,21 @@ public class Maritime extends Entity<MaritimeId> {
     public void setExchangeRate(ExchangeRate exchangeRate) {
         this.exchangeDesired = exchangeRate;
     }
+
+    public void activate() {
+        this.active = true;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
     //endregion
 
     //region Methods
-    public void improveRate(Value newValueOrdered) {
-        this.exchangeDesired = ExchangeRate.of(newValueOrdered, this.exchangeDesired.getValueReceived());
+    public void improveExchangeRate(Integer additionalValueOrdered, Integer additionalValueReceived) {
+        Value newValueOrdered = Value.of(this.exchangeDesired.getValueOrdered().getValue() + additionalValueOrdered);
+        Value newValueReceived = Value.of(this.exchangeDesired.getValueReceived().getValue() + additionalValueReceived);
+        this.exchangeDesired = ExchangeRate.of(newValueOrdered, newValueReceived);
     }
     //endregion
 }
