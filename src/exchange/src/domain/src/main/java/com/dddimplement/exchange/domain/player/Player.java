@@ -10,7 +10,6 @@ import com.dddimplement.shared.domain.generic.DomainEvent;
 
 import java.util.List;
 
-
 public class Player extends AggregateRoot<PlayerId> {
     private Name name;
     private Color color;
@@ -20,16 +19,16 @@ public class Player extends AggregateRoot<PlayerId> {
     private Turn turn;
 
     // region Constructors
+
+    private Player(PlayerId identity) {
+        super(identity);
+        subscribe(new Playerhandler(this));
+    }
+
     public Player(String name, String color) {
         super(new PlayerId());
         subscribe(new Playerhandler(this));
         apply(new CreatedPlayer(name, color));
-    }
-
-    private  Player(PlayerId identity) {
-        super(identity);
-        subscribe(new Playerhandler(this));
-
     }
 
     public static Player from(final String identity, final List<DomainEvent> events) {
@@ -107,10 +106,10 @@ public class Player extends AggregateRoot<PlayerId> {
     }
 
     public void createdCounterOffer(Integer amount, String type) {
-        apply(new CounterOfferCreated( amount, type));
+        apply(new CounterOfferCreated(amount, type));
     }
 
-    public void createdTerritory(String typeTerritory ) {
+    public void createdTerritory(String typeTerritory) {
         apply(new TerritoryCreated(typeTerritory));
     }
 
@@ -133,7 +132,7 @@ public class Player extends AggregateRoot<PlayerId> {
 
     // region public methods
     public Territory getTerritoryById(final String territoryId) {
-        return new Territory(TerritoryId.of(territoryId) , this.territory.getCity(), this.territory.getPath(), this.territory.getSettlement());
+        return new Territory(TerritoryId.of(territoryId), this.territory.getCity(), this.territory.getPath(), this.territory.getSettlement());
     }
 
     public Offer getOfferById(final String offerId) {
@@ -143,6 +142,5 @@ public class Player extends AggregateRoot<PlayerId> {
     public Turn getTurnById(final String turnId) {
         return new Turn(TurnId.of(turnId), this.turn.getFase());
     }
-
     // endregion
 }

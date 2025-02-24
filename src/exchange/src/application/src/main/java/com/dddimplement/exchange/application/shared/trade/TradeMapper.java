@@ -9,7 +9,8 @@ public class TradeMapper {
                 trade.getIdentity().getValue(),
                 trade.getState().getState().toString(),
                 mapExchangeRate(trade.getDomestic().getExchangeRate()),
-                mapExchangeRate(trade.getMaritime().getExchangeRate())
+                mapExchangeRate(trade.getMaritime().getExchangeRate()),
+                trade.getTradeType()
         );
     }
 

@@ -42,8 +42,8 @@ public class Maritime extends Entity<MaritimeId> {
 
     //region Methods
     public void improveExchangeRate(Integer additionalValueOrdered, Integer additionalValueReceived) {
-        Value newValueOrdered = Value.of(this.exchangeDesired.getValueOrdered().getValue()+ additionalValueOrdered);
-        Value newValueReceived = Value.of(this.exchangeDesired.getValueReceived().getValue()+ additionalValueReceived);
+        Value newValueOrdered = Value.of(this.exchangeDesired.getValueOrdered().getValue() + additionalValueOrdered);
+        Value newValueReceived = Value.of(this.exchangeDesired.getValueReceived().getValue() + additionalValueReceived);
         this.exchangeDesired = ExchangeRate.of(newValueOrdered, newValueReceived);
     }
     //endregion

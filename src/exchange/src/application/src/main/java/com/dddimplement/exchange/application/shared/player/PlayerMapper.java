@@ -14,10 +14,10 @@ public class PlayerMapper {
                 player.getIdentity().getValue(),
                 player.getName().getValue(),
                 player.getColor().getValue(),
-                mapOffer(player.getOfferById(player.getOffer().getIdentity().getValue())),
-                mapTerritory(player.getTerritoryById(player.getTerritory().getIdentity().getValue())),
+                player.getOffer() != null ? mapOffer(player.getOfferById(player.getOffer().getIdentity().getValue())) : null,
+                player.getTerritory() != null ? mapTerritory(player.getTerritoryById(player.getTerritory().getIdentity().getValue())) : null,
                 player.getResources().stream().map(ResourceType::getType).map(Enum::name).collect(Collectors.toList()),
-                mapTurn(player.getTurnById(player.getTurn().getIdentity().getValue()))
+                player.getTurn() != null ? mapTurn(player.getTurnById(player.getTurn().getIdentity().getValue())) : null
         );
     }
 

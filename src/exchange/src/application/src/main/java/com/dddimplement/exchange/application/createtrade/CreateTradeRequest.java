@@ -6,7 +6,7 @@ public class CreateTradeRequest extends Request {
     private final Integer valueOrdered;
     private final Integer valueReceived;
 
-    public CreateTradeRequest(Integer valueOrdered, Integer valueReceived) {
+    public CreateTradeRequest( Integer valueOrdered, Integer valueReceived) {
         super(null);
         this.valueOrdered = valueOrdered;
         this.valueReceived = valueReceived;

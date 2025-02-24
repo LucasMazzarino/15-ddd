@@ -1,15 +1,15 @@
-package com.dddimplement.exchange.domain.player.events;
+package com.dddimplement.exchange.application.createplayer;
 
-import com.dddimplement.shared.domain.generic.DomainEvent;
+import com.buildingblocks.shared.application.Request;
 
 import java.util.List;
 
-public class CreatedPlayer extends DomainEvent {
+public class CreatePlayerRequest extends Request {
     private final String name;
     private final String color;
 
-    public CreatedPlayer(String name, String color) {
-        super(EventsEnum.CREATED_PLAYER.name());
+    public CreatePlayerRequest(String name, String color) {
+        super(null);
         this.name = name;
         this.color = color;
     }

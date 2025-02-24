@@ -16,14 +16,10 @@ public class CreateTradeUseCase implements ICommandUseCase<CreateTradeRequest, M
 
     @Override
     public Mono<TradeResponse> execute(CreateTradeRequest request) {
-        return repository.findEventsByAggregateId(request.getAggregateId())
-                .collectList()
-                .map(events -> {
-                    Trade trade = Trade.from(request.getAggregateId(), events);
-                    trade.tradeCreated(request.getValueOrdered(), request.getValueReceived());
-                    trade.getUncommittedEvents().forEach(repository::save);
-                    trade.markEventsAsCommitted();
-                    return TradeMapper.mapToTradeResponse(trade);
-                });
+        Trade trade = new Trade(request.getValueOrdered(), request.getValueReceived());
+        trade.tradeCreated(request.getValueOrdered(), request.getValueReceived());
+        trade.getUncommittedEvents().forEach(repository::save);
+        trade.markEventsAsCommitted();
+        return Mono.just(TradeMapper.mapToTradeResponse(trade));
     }
 }

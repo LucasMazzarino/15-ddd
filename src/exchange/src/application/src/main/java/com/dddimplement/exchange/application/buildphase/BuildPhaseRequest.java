@@ -9,8 +9,8 @@ public class BuildPhaseRequest extends Request {
     private boolean buildSettlement;
     private String territoryType;
 
-    public BuildPhaseRequest(String playerId, boolean buildCity, boolean buildPath, boolean buildSettlement, String territoryType) {
-        super(null);
+    public BuildPhaseRequest(String aggregateId ,String playerId, boolean buildCity, boolean buildPath, boolean buildSettlement, String territoryType) {
+        super(aggregateId);
         this.playerId = playerId;
         this.buildCity = buildCity;
         this.buildPath = buildPath;

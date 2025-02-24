@@ -5,8 +5,8 @@ import com.buildingblocks.shared.application.Request;
 public class EndTurnRequest extends Request {
     private String playerId;
 
-    public EndTurnRequest(String playerId) {
-        super(null);
+    public EndTurnRequest(String aggregateId,String playerId) {
+        super(aggregateId);
         this.playerId = playerId;
     }
 

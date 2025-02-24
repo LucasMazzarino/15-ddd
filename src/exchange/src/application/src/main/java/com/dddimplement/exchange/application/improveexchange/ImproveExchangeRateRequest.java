@@ -7,8 +7,8 @@ public class ImproveExchangeRateRequest extends Request {
     private final Integer valueOrdered;
     private final Integer valueReceived;
 
-    public ImproveExchangeRateRequest(String tradeId, Integer valueOrdered, Integer valueReceived) {
-        super(null);
+    public ImproveExchangeRateRequest(String aggregateId, String tradeId, Integer valueOrdered, Integer valueReceived) {
+        super(aggregateId);
         this.tradeId = tradeId;
         this.valueOrdered = valueOrdered;
         this.valueReceived = valueReceived;

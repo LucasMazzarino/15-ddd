@@ -20,7 +20,7 @@ public class ImproveExchangeRateUseCase implements ICommandUseCase<ImproveExchan
                 .collectList()
                 .map(events -> {
                     Trade trade = Trade.from(request.getTradeId(), events);
-                    trade.exchangeRateImproved(request.getValueOrdered(), request.getValueReceived());
+                    trade.getMaritime().improveExchangeRate(request.getValueOrdered(), request.getValueReceived());
                     trade.getUncommittedEvents().forEach(repository::save);
                     trade.markEventsAsCommitted();
                     return TradeMapper.mapToTradeResponse(trade);

@@ -13,6 +13,7 @@ public class Trade extends AggregateRoot<TradeId> {
     private TradeState state;
     private Domestic domestic;
     private Maritime maritime;
+    private TradeType tradeType; // Añadir este campo
 
     //region Constructors
 
@@ -22,12 +23,12 @@ public class Trade extends AggregateRoot<TradeId> {
         apply(new TradeCreated(valueOrdered, valueReceived));
     }
 
-    private Trade( TradeId identity ) {
+    private Trade(TradeId identity) {
         super(identity);
         subscribe(new TradeHandler(this));
     }
 
-    public static Trade from(final String identity, final List<DomainEvent> events){
+    public static Trade from(final String identity, final List<DomainEvent> events) {
         Trade trade = new Trade(TradeId.of(identity));
         events.forEach(trade::apply);
         return trade;
@@ -36,11 +37,12 @@ public class Trade extends AggregateRoot<TradeId> {
     //endregion
 
     //domain events
-    public void tradeCreated (Integer valueOrdered, Integer valueReceived) {
+    public void tradeCreated(Integer valueOrdered, Integer valueReceived) {
         apply(new TradeCreated(valueOrdered, valueReceived));
     }
 
     public void tradeSelected(TradeType type) {
+        this.tradeType = type; // Inicializar este campo
         apply(new TradeSelected(type));
     }
 
@@ -80,6 +82,9 @@ public class Trade extends AggregateRoot<TradeId> {
         this.maritime = maritime;
     }
 
+    public TradeType getTradeType() {
+        return tradeType; // Añadir este método
+    }
 
     //endregion
 

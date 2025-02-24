@@ -48,7 +48,6 @@ public class Domestic extends Entity<DomesticId> {
         int newValueOrdered = this.exchangeRate.getValueOrdered().getValue() + valueOrdered;
         int newValueReceived = this.exchangeRate.getValueReceived().getValue() + valueReceived;
         this.exchangeRate = ExchangeRate.of(Value.of(newValueOrdered), Value.of(newValueReceived));
-
     }
     //endregion
 }

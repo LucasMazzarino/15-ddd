@@ -7,8 +7,8 @@ public class SelectTradeRequest extends Request {
     private final String tradeId;
     private final TradeType tradeType;
 
-    public SelectTradeRequest(String tradeId, TradeType tradeType) {
-        super(null);
+    public SelectTradeRequest(String aggregateId, String tradeId, TradeType tradeType) {
+        super(aggregateId);
         this.tradeId = tradeId;
         this.tradeType = tradeType;
     }

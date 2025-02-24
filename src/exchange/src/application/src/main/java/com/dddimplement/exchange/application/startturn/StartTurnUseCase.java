@@ -17,10 +17,14 @@ public class StartTurnUseCase implements ICommandUseCase<StartTurnRequest, Mono<
 
     @Override
     public Mono<PlayerResponse> execute(StartTurnRequest request) {
-        Player player = new Player(request.getPlayerName(), request.getColor());
-        player.startedTurn(TurnFaseEnum.ROLL);
-        player.getUncommittedEvents().forEach(repository::save);
-        player.markEventsAsCommitted();
-        return Mono.just(PlayerMapper.mapToPlayer(player));
+        return repository.findEventsByAggregateId(request.getAggregateId())
+                .collectList()
+                .map(events -> Player.from(request.getAggregateId(), events))
+                .flatMap(player -> {
+                    player.startedTurn(TurnFaseEnum.ROLL);
+                    player.getUncommittedEvents().forEach(repository::save);
+                    player.markEventsAsCommitted();
+                    return Mono.just(PlayerMapper.mapToPlayer(player));
+                });
     }
 }

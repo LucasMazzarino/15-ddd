@@ -69,18 +69,26 @@ public class Playerhandler extends DomainActionsContainer {
     }
 
     public Consumer<? extends DomainEvent> OfferRejected(Player player) {
-        return (OfferAccepted event) -> {
+        return (OfferRejected event) -> {
             Offer offer = player.getOffer();
+            if (offer != null) {
                 offer.reject();
+            } else {
+                throw new IllegalStateException("Offer is null");
+            }
         };
     }
 
     public Consumer<? extends DomainEvent> CounterOfferCreated(Player player) {
         return (CounterOfferCreated event) -> {
-            ResourceTypeEnum resourceType = ResourceTypeEnum.valueOf(event.getResourceType());
-            Amount amount = Amount.of(event.getAmount());
-            Offer offer = new Offer(Amount.of(event.getAmount()), ResourceType.of(resourceType, amount), IsAccepted.of(false));
-            player.setOffer(offer);
+            try {
+                ResourceTypeEnum resourceType = ResourceTypeEnum.valueOf(event.getResourceType());
+                Amount amount = Amount.of(event.getAmount());
+                Offer offer = new Offer(Amount.of(event.getAmount()), ResourceType.of(resourceType, amount), IsAccepted.of(false));
+                player.setOffer(offer);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid resource type: " + event.getResourceType(), e);
+            }
         };
     }
 
