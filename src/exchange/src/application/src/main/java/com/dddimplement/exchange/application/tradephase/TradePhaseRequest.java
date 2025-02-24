@@ -20,31 +20,16 @@ public class TradePhaseRequest extends Request {
         return playerId;
     }
 
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
-    }
-
     public String getOfferId() {
         return offerId;
-    }
-
-    public void setOfferId(String offerId) {
-        this.offerId = offerId;
     }
 
     public Integer getOfferAmount() {
         return offerAmount;
     }
 
-    public void setOfferAmount(Integer offerAmount) {
-        this.offerAmount = offerAmount;
-    }
-
     public String getOfferType() {
         return offerType;
     }
 
-    public void setOfferType(String offerType) {
-        this.offerType = offerType;
-    }
 }

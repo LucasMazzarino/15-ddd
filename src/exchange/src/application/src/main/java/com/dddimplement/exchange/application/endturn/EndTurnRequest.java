@@ -14,7 +14,4 @@ public class EndTurnRequest extends Request {
         return playerId;
     }
 
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
-    }
 }

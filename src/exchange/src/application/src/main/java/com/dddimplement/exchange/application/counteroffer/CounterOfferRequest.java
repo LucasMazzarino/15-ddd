@@ -18,23 +18,12 @@ public class CounterOfferRequest extends Request {
         return playerId;
     }
 
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
-    }
-
     public Integer getCounterOfferAmount() {
         return counterOfferAmount;
-    }
-
-    public void setCounterOfferAmount(Integer counterOfferAmount) {
-        this.counterOfferAmount = counterOfferAmount;
     }
 
     public String getCounterOfferType() {
         return counterOfferType;
     }
 
-    public void setCounterOfferType(String counterOfferType) {
-        this.counterOfferType = counterOfferType;
-    }
 }
